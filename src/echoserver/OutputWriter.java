@@ -3,9 +3,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
-public class OutputWriter implements Runnable{
+public class OutputWriter implements Runnable {
     InputStream fromSocket;
-    public Socket socket;
+    Socket socket;
 
     public OutputWriter(Socket socket) {
         try {
@@ -25,18 +25,19 @@ public class OutputWriter implements Runnable{
     try {
         int dataFromOutput;
         while ((dataFromOutput = fromSocket.read()) != -1) {
-            System.out.write(dataFromOutput); // Write data from the input stream to system out
-            System.out.flush(); // Flush system out    
+            System.out.write(dataFromOutput); // Write data from the input stream to system out 
             }
         } catch (IOException e1) {
         System.out.println("Cannot read from socket");
         e1.printStackTrace();
         }
 
+        System.out.flush(); // Flush system out   
+
         try {
-            socket.shutdownOutput();
+            socket.close();
         } catch (IOException e) {
-            System.out.println("Unable to close socket output");
+            System.out.println("Unable to close socket");
             e.printStackTrace();
         }
     }
